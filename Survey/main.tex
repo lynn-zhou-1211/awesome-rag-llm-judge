@@ -1,0 +1,55 @@
+% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+% \pdfoutput=1
+% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
+
+\documentclass[11pt]{article}
+
+% Remove the "review" option to generate the final version.
+\usepackage{ACL2023}
+\usepackage{newunicodechar}
+\newunicodechar{–}{--}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+
+\title{The Illusion of Objectivity in RAG Evaluation: A Survey on the Reliability and Biases of LLM Judges}
+
+\author{Lynn Zhou \\
+  \texttt{zzzzzzzl@tamu.edu} \And
+  Deepmoy Hazra\\
+  \texttt{deepmoy3@tamu.edu} \And
+  Huang, Wei-Chen \\
+  \texttt{wilson0623@tamu.edu} \AND
+  Texas A\&M University \\
+  College Station, TX 77843
+}
+
+\begin{document}
+\maketitle
+
+% ==========================================
+% SECTION INCLUDES
+% ==========================================
+
+\input{sections/00_abstract}
+\input{sections/01_intro}
+\input{sections/02_background}
+\input{sections/03_triggers}
+\input{sections/04_mechanisms}
+\input{sections/05_mitigation}
+\input{sections/06_challenges}
+\input{sections/07_conclusion}
+
+% ==========================================
+% REFERENCES
+% ==========================================
+
+% uncomment when references added
+% \bibliography{references/ref_triggers,references/ref_mechanisms,references/ref_mitigation}
+% \bibliographystyle{acl_natbib}
+
+\end{document}

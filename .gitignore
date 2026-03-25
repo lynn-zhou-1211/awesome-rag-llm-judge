@@ -1,8 +1,14 @@
+# LaTeX build artifacts
 *.aux
 *.bbl
 *.blg
-*.fdb_latexmk
-*.fls
 *.log
 *.out
+*.toc
 *.synctex.gz
+*.fls
+*.fdb_latexmk
+*.xdv
+*.pdf
+
+.DS_Store
