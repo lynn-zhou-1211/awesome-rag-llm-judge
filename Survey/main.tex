@@ -15,6 +15,9 @@
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
 \usepackage{inconsolata}
+\usepackage{silence}
+\WarningFilter{latex}{Underfull}
+\WarningFilter{latex}{Overfull}
 
 \title{The Illusion of Objectivity in RAG Evaluation: A Survey on the Reliability and Biases of LLM Judges}
 
@@ -49,7 +52,7 @@
 % ==========================================
 
 % uncomment when references added
-% \bibliography{references/ref_triggers,references/ref_mechanisms,references/ref_mitigation}
-% \bibliographystyle{acl_natbib}
+\bibliography{references/ref_triggers,references/ref_mechanisms,references/ref_mitigation}
+\bibliographystyle{acl_natbib}
 
 \end{document}
