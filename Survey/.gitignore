@@ -1,0 +1,34 @@
+# =========================
+# LaTeX build files
+# =========================
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex
+
+# PDF output (optional)
+*.pdf
+
+# =========================
+# OS / Editor junk
+# =========================
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# =========================
+# Temporary files
+# =========================
+*.tmp
+*.bak
+*.swp

@@ -6,3 +6,40 @@
 % 1. Static Methods: Review early fixes like prompting techniques.
 % 2. Multi-Model Debate: Review consensus methods and highlight their critical flaw of reaching false agreements.
 % 3. Agentic Evolution: Introduce the paradigm shift toward multi-step, tool-augmented verification.
+Despite the growing adoption of large language models (LLMs) as evaluators, their reliability is often affected by bias, prompt sensitivity, and lack of structured reasoning. Recent research proposes several mitigation strategies to improve the robustness, fairness, and alignment of LLM-based judging systems. These strategies can be broadly categorized into rubric calibration, structured prompting, multi-agent evaluation, agentic verification, and human-in-the-loop approaches.
+
+\subsection{Rubric and Criteria Calibration}
+
+One fundamental limitation of LLM judges is the ambiguity in evaluation criteria, which leads to inconsistent scoring. To address this, AutoCalibrate~\cite{autocalibrate} proposes an automatic framework that generates and refines evaluation rubrics based on human-labeled data. By iteratively improving these criteria, the method enhances alignment between LLM judgments and expert evaluations.
+
+Similarly, Prometheus 2~\cite{prometheus2} demonstrates that training specialized evaluator models with explicit scoring rubrics significantly improves agreement with human judgments. These models leverage structured evaluation dimensions, reducing reliance on implicit heuristics such as verbosity or tone. Together, these approaches highlight that clearly defined and calibrated criteria are essential for reliable evaluation.
+
+\subsection{Structured Prompting and Reasoning}
+
+Another key mitigation strategy is the use of structured prompts that guide the LLM through explicit reasoning steps. Instead of producing a single scalar score, the model is encouraged to evaluate responses along multiple dimensions, such as factual correctness, relevance, and coherence.
+
+Prior work~\cite{comm_systems} shows that detailed prompting strategies reduce the influence of superficial features, such as response length or stylistic confidence, which often bias LLM judgments. By enforcing step-by-step reasoning, structured prompting ensures that the evaluation process is more transparent and grounded in task-relevant criteria.
+
+\subsection{Multi-Agent and Peer-based Evaluation}
+
+Single LLM judges may inherit systematic biases from their training data. To mitigate this, multi-agent approaches introduce multiple evaluators that interact, critique, and refine each other's judgments.
+
+Peer Rank and Discussion (PRD)~\cite{prd} enables multiple models to evaluate and iteratively discuss candidate outputs, reducing self-enhancement bias and position bias. This collaborative evaluation process improves alignment with human judgments by incorporating diverse perspectives.
+
+Furthermore, culturally-aware multi-agent frameworks such as MACD~\cite{macd} assign distinct cultural perspectives to different agents and use consensus mechanisms to reduce bias. These approaches demonstrate that diversity in evaluators can lead to more balanced and fair assessments.
+
+\subsection{Agentic and Stepwise Verification}
+
+Recent work moves beyond static evaluation toward agentic judging, where evaluation is treated as a multi-step process involving planning, decomposition, and verification.
+
+Agent-as-a-Judge frameworks~\cite{agent_judge} decompose complex tasks into smaller sub-requirements and evaluate each component separately. Similarly, Auto-Eval Judge~\cite{auto_eval_judge} introduces automated evaluation pipelines that verify intermediate steps rather than relying solely on final outputs.
+
+These approaches are particularly effective for complex tasks such as code generation or multi-step reasoning, where correctness depends on multiple intermediate decisions. By validating each step, agentic evaluation reduces error propagation and improves overall reliability.
+
+\subsection{Human-in-the-loop and Hybrid Evaluation}
+
+Despite significant progress, fully automated LLM-based evaluation remains imperfect. Hybrid approaches that combine LLM judges with human oversight provide an additional layer of reliability.
+
+Prior work~\cite{comm_systems} suggests that ensemble strategies, where multiple LLM judges are combined, can improve robustness. However, for high-stakes applications, human-in-the-loop evaluation remains essential to resolve ambiguous or sensitive cases.
+
+Overall, these mitigation strategies demonstrate that improving LLM-based evaluation requires a combination of better criteria design, structured reasoning, collaborative evaluation, and human supervision.
