@@ -6,3 +6,96 @@
 % 1. Definition: A brief explanation of the standard workflow for automated evaluation in RAG.
 % 2. Taxonomy Tree Figure: A mandatory diagram showing the three branches of this survey.
 % 3. Navigation: A short paragraph referencing the figure and telling the reader how the rest of the paper is organized.
+
+In a standard Retrieval-Augmented Generation (RAG) pipeline, automated evaluation typically relies on the LLM-as-a-Judge paradigm. The baseline workflow is highly structured: the evaluating model receives a user query, the retrieved reference documents, and the target model's generated response. Its primary task is to score the response across specific dimensions, particularly verifying if the generated text is strictly faithful to the provided context. While baseline LLM judges exhibit general vulnerabilities such as verbosity or self-enhancement biases \citep{wang2023fair}, applying this paradigm to dynamic RAG environments introduces a distinct set of domain-specific stressors. 
+
+Overall, this survey adopts a unified view to explain how evaluation reliability is challenged under these RAG-specific pressures. We specifically examine the ``internal fights'' within the model when its own parametric memory conflicts with the retrieved data. Finally, we demonstrate why the field must move toward ``Agent'' systems to resolve these systemic problems. 
+
+To systematically analyze these issues, we categorize the research landscape into a three-branch taxonomy, as illustrated in Figure \ref{fig:taxonomy_tree}.
+
+% --- Taxonomy Tree Code Start ---
+\begin{figure*}[t]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{forest}
+      for tree={
+        grow'=0, draw, thick, rounded corners=3pt, align=center, font=\sffamily,
+        child anchor=west, parent anchor=east, anchor=west,
+        edge path={
+          \noexpand\path[\forestoption{edge}, -, thick, draw=gray!80]
+            (!u.parent anchor) -- +(4mm,0) |- (.child anchor)\forestoption{edge label};
+        },
+        l sep=8mm, s sep=2.5mm,
+      },
+      % 定義葉節點(論文)的通用樣式：與父節點一致的粗框與圓角，但設定寬度與左對齊
+      leaf style/.style={
+        text width=7.5cm, align=left, font=\sffamily\scriptsize
+      }
+      [Reliability of\\LLM-as-a-Judge\\in RAG Systems, fill=gray!15, font=\sffamily\bfseries
+        % --- 第一分支：環境誘因 (藍色系) ---
+        [Environmental Triggers\\of Bias, fill=blue!10
+          [Context Length \&\\Positional Bias, fill=blue!5
+            [Lost in the Middle: \citep{lostinthemiddle2023}, fill=blue!5, leaf style]
+            [Distance \& Positional Bias: \citep{distance2024, ragqa2024, posbias2025}, fill=blue!5, leaf style]
+            [Attention Calibration: \citep{foundinmiddle2024}, fill=blue!5, leaf style]
+          ]
+          [Distractors{,} Noise\\\& Cognitive Overload, fill=blue!5
+            [Lost in the Noise: \citep{lostinnoise2026}, fill=blue!5, leaf style]
+            [Internal Representation Distortion: \citep{internalrep2026}, fill=blue!5, leaf style]
+            [Dynamic Context Selection: \citep{dynamiccontext2025}, fill=blue!5, leaf style]
+          ]
+        ]
+        % --- 第二分支：認知衝突 (紅色系) ---
+        [Epistemological Conflict\\(Truth vs. Faith), fill=red!10
+          [Defining the Paradox, fill=red!5
+            [Uncertainty Quantification: \citep{fadeeva2026faithfulnessawareuncertaintyquantificationfactchecking}, fill=red!5, leaf style]
+            [Conflict Taxonomy: \citep{cattan2025draggedconflictsdetectingaddressing}, fill=red!5, leaf style]
+            [TruthfulRAG (Knowledge Graphs): \citep{liu2025truthfulragresolvingfactuallevelconflicts}, fill=red!5, leaf style]
+          ]
+          [Probing the Black Box, fill=red!5
+            [Middle Layers Probing: \citep{gao2025probinglatentknowledgeconflict}, fill=red!5, leaf style]
+            [Attention vs. MLPs: \citep{zhao2025understanding}, fill=red!5, leaf style]
+            [Transparent Activation Flow: \citep{ye2026seeingconflicttransparentknowledge}, fill=red!5, leaf style]
+          ]
+          [Dynamic Reliance \& Control, fill=red!5
+            [Layer Activation Control: \citep{bi2025parametersvscontextfinegrained}, fill=red!5, leaf style]
+            [Parametric Reinforcement: \citep{lin2026resistingcontextualinterferencerag, wang2025accommodateknowledgeconflictsretrievalaugmented}, fill=red!5, leaf style]
+            [Micro-Act (Self-Reasoning): \citep{huo2025microactmitigatingknowledgeconflict}, fill=red!5, leaf style]
+          ]
+        ]
+        % --- 第三分支：緩解策略 (綠色系) ---
+        [Mitigation to\\Agentic Evaluation, fill=green!10
+          [Rubric \& Criteria Calibration, fill=green!5
+            [AutoCalibrate: \citep{autocalibrate}, fill=green!5, leaf style]
+            [Prometheus 2: \citep{prometheus2}, fill=green!5, leaf style]
+          ]
+          [Structured Prompting, fill=green!5
+            [Multi-dimensional \& Step-by-step: \citep{comm_systems}, fill=green!5, leaf style]
+          ]
+          [Multi-Agent \& Peer-based, fill=green!5
+            [PRD (Peer Rank \& Discussion): \citep{prd}, fill=green!5, leaf style]
+            [MACD (Cultural Bias Mitigation): \citep{macd}, fill=green!5, leaf style]
+          ]
+          [Agentic Verification, fill=green!5
+            [Agent-as-a-Judge: \citep{agent_judge}, fill=green!5, leaf style]
+            [Auto-Eval Judge (Pipeline): \citep{auto_eval_judge}, fill=green!5, leaf style]
+          ]
+          [Human-in-the-loop, fill=green!5
+            [Ensemble \& Human Oversight: \citep{comm_systems}, fill=green!5, leaf style]
+          ]
+        ]
+      ]
+    \end{forest}
+    }
+    \caption{Taxonomy of environmental triggers, internal mechanics, and mitigation strategies for LLM-as-a-Judge in RAG systems.}
+    \label{fig:taxonomy_tree}
+\end{figure*}
+% --- Taxonomy Tree Code End ---
+
+We organize our discussion around this structural map to track the complete lifecycle of evaluation:
+
+\begin{itemize}
+    \item \textbf{Section \ref{sec:triggers}} analyzes how noise and extreme context length trigger specific biases in LLM judges within the RAG environment. We evaluate how retrieved irrelevant information, such as distractors, systematically destroys the judge's evaluation capability.
+    \item \textbf{Section \ref{sec:conflict}} provides a deep dive into the model's judging mechanisms when facing discrepancies between internal and external knowledge. We explore the aforementioned ``internal fights'' and define the paradox of knowledge conflict, synthesizing how researchers observe this struggle through internal probing and testing.
+    \item \textbf{Section \ref{sec:mitigation}} collects current mitigation strategies and discusses the evolutionary trend toward ``Agent-as-a-Judge'' frameworks. We analyze the limitations of static interventions and show why the paradigm shift to multi-step, tool-augmented systems is necessary to fix these reliability issues.
+\end{itemize}
