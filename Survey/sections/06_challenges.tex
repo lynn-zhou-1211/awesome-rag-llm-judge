@@ -6,3 +6,42 @@
 % 1. Benchmarking: The need for more robust testing grounds with adversarial noise.
 % 2. Cost and Latency: The difficulty of deploying slow, expensive agentic judges in real industry systems.
 % 3. Tool Reliability: The cascading failures that happen when an agent uses a flawed external tool.
+While recent advances have significantly improved the reliability of LLM-based evaluation, several fundamental challenges remain unresolved. These limitations highlight that current mitigation strategies are not sufficient to guarantee robust, fair, and generalizable evaluation.
+
+\subsection{Prompt Sensitivity and Superficial Bias}
+
+A major challenge in LLM-based evaluation is the sensitivity of judgments to prompt design. Small variations in prompt wording, structure, or instruction detail can lead to significantly different evaluation outcomes. Prior work~\cite{comm_systems} shows that LLM judges often rely on superficial features such as verbosity, confidence, and writing style rather than true task correctness.
+
+Even with structured prompting and calibration techniques, this sensitivity cannot be fully eliminated. As a result, evaluation consistency remains a key concern, especially when comparing results across different systems or experimental setups.
+
+\subsection{Cultural and Value Misalignment}
+
+LLM judges are often trained on data that reflects dominant cultural perspectives, leading to biased evaluations in cross-cultural contexts. While multi-agent approaches such as MACD~\cite{macd} introduce culturally diverse evaluators, they do not fully resolve this issue.
+
+In particular, shifting prompts or agents to represent different cultural viewpoints may simply redistribute bias rather than eliminate it. This makes it difficult to design evaluation systems that are universally fair across diverse user populations and application domains.
+
+\subsection{Limitations of Multi-Agent Debate}
+
+Multi-agent debate and collaboration have been proposed as a way to improve evaluation reliability. However, recent findings~\cite{debate_limit} indicate that improvements in such systems may not always stem from genuine reasoning.
+
+Instead, gains can arise from ensembling effects, where multiple agents increase the probability of selecting a correct answer without truly understanding the problem. Additionally, persuasive but incorrect agents can influence the final outcome, leading to false consensus. These limitations suggest that multi-agent systems are not a guaranteed solution to evaluation errors.
+
+\subsection{Tool-Memory Conflicts in Agentic Evaluation}
+
+The integration of external tools, such as retrieval systems or APIs, introduces new challenges in agent-based evaluation. One critical issue is the conflict between the model's internal knowledge and external tool outputs.
+
+Prior work~\cite{tool_conflict} demonstrates that such conflicts are common and difficult to resolve. Existing approaches, including prompt-based corrections and retrieval-augmented generation, are often insufficient to reconcile discrepancies. This limits the effectiveness of tool-augmented evaluation systems.
+
+\subsection{Cost, Latency, and System Complexity}
+
+Advanced evaluation methods, particularly those based on multi-agent collaboration or agentic pipelines, significantly increase computational cost and system complexity. According to recent surveys~\cite{agent_survey}, these approaches require multiple model calls, iterative reasoning steps, and additional infrastructure for coordination and memory management.
+
+This creates practical challenges for real-world deployment, where efficiency, scalability, and response time are critical considerations.
+
+\subsection{Limited Generalization Across Tasks and Domains}
+
+Another key limitation is the lack of generalization across diverse tasks and domains. Many evaluation methods perform well on specific benchmarks but fail to maintain reliability when applied to new settings.
+
+Agent-based evaluation frameworks~\cite{agent_judge, auto_eval_judge} improve performance on complex tasks by decomposing problems into smaller components. However, they still depend heavily on task-specific design choices and evaluation criteria. As a result, building a universally reliable LLM judge remains an open challenge.
+
+Overall, these challenges indicate that while LLM-based evaluation has made substantial progress, it still requires further advancements in robustness, fairness, and scalability before it can be fully trusted in real-world applications.
