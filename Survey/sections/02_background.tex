@@ -14,25 +14,27 @@ Overall, this survey adopts a unified view to explain how evaluation reliability
 To systematically analyze these issues, we categorize the research landscape into a three-branch taxonomy, as illustrated in Figure \ref{fig:taxonomy_tree}.
 
 % --- Taxonomy Tree Code Start ---
+% 如果是双栏论文，请保留 figure* 和 [t]；如果是单栏，请改为 \begin{figure}[htbp]
 \begin{figure*}[t]
     \centering
     \resizebox{\textwidth}{!}{%
     \begin{forest}
       for tree={
-        grow'=0, draw, thick, rounded corners=3pt, align=center, font=\sffamily,
+        grow'=0, draw, thick, rounded corners=3pt, align=center, 
         child anchor=west, parent anchor=east, anchor=west,
         edge path={
           \noexpand\path[\forestoption{edge}, -, thick, draw=gray!80]
             (!u.parent anchor) -- +(4mm,0) |- (.child anchor)\forestoption{edge label};
         },
-        l sep=8mm, s sep=2.5mm,
+        % 【修改点】：减小了水平间距和垂直间距，让图片整体变得更紧凑，降低高度
+        l sep=5.5mm,  % 原来是 8mm
+        s sep=1.5mm,  % 原来是 2.5mm
       },
-      % 定義葉節點(論文)的通用樣式：與父節點一致的粗框與圓角，但設定寬度與左對齊
       leaf style/.style={
-        text width=7.5cm, align=left, font=\sffamily\scriptsize
+        align=left
       }
-      [Reliability of\\LLM-as-a-Judge\\in RAG Systems, fill=gray!15, font=\sffamily\bfseries
-        % --- 第一分支：環境誘因 (藍色系) ---
+      [Reliability of\\LLM-as-a-Judge\\in RAG Systems, fill=gray!15, font=\bfseries
+        % --- 第一分支：环境诱因 (蓝色系) ---
         [Environmental Triggers\\of Bias, fill=blue!10
           [Context Length \&\\Positional Bias, fill=blue!5
             [Lost in the Middle: \citep{lostinthemiddle2023}, fill=blue!5, leaf style]
@@ -45,7 +47,7 @@ To systematically analyze these issues, we categorize the research landscape int
             [Dynamic Context Selection: \citep{dynamiccontext2025}, fill=blue!5, leaf style]
           ]
         ]
-        % --- 第二分支：認知衝突 (紅色系) ---
+        % --- 第二分支：认知冲突 (红色系) ---
         [Epistemological Conflict\\(Truth vs. Faith), fill=red!10
           [Defining the Paradox, fill=red!5
             [Uncertainty Quantification: \citep{fadeeva2026faithfulnessawareuncertaintyquantificationfactchecking}, fill=red!5, leaf style]
@@ -63,7 +65,7 @@ To systematically analyze these issues, we categorize the research landscape int
             [Micro-Act (Self-Reasoning): \citep{huo2025microactmitigatingknowledgeconflict}, fill=red!5, leaf style]
           ]
         ]
-        % --- 第三分支：緩解策略 (綠色系) ---
+        % --- 第三分支：缓解策略 (绿色系) ---
         [Mitigation to\\Agentic Evaluation, fill=green!10
           [Rubric \& Criteria Calibration, fill=green!5
             [AutoCalibrate: \citep{autocalibrate}, fill=green!5, leaf style]
@@ -91,7 +93,6 @@ To systematically analyze these issues, we categorize the research landscape int
     \label{fig:taxonomy_tree}
 \end{figure*}
 % --- Taxonomy Tree Code End ---
-
 We organize our discussion around this structural map to track the complete lifecycle of evaluation:
 
 \begin{itemize}
