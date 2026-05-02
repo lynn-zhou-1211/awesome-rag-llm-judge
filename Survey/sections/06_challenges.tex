@@ -10,31 +10,31 @@ While recent advances have significantly improved the reliability of LLM-based e
 
 \subsection{Prompt Sensitivity and Superficial Bias}
 
-A major challenge in LLM-based evaluation is the sensitivity of judgments to prompt design. Small variations in prompt wording, structure, or instruction detail can lead to significantly different evaluation outcomes. Prior work~\cite{comm_systems} shows that LLM judges often rely on superficial features such as verbosity, confidence, and writing style rather than true task correctness.
+A major challenge in LLM-based evaluation is the sensitivity of judgments to prompt design. Small variations in prompt wording, structure, or instruction detail can lead to significantly different evaluation outcomes. Prior work~\cite{comm_systems} shows that LLM judges often get influenced by superficial features such as politeness, verbosity, confidence, and writing style rather than true task correctness.
 
 Even with structured prompting and calibration techniques, this sensitivity cannot be fully eliminated. As a result, evaluation consistency remains a key concern, especially when comparing results across different systems or experimental setups.
 
 \subsection{Cultural and Value Misalignment}
 
-LLM judges are often trained on data that reflects dominant cultural perspectives, leading to biased evaluations in cross-cultural contexts. While multi-agent approaches such as MACD~\cite{macd} introduce culturally diverse evaluators, they do not fully resolve this issue.
+LLM judges are often trained on data that reflects dominant cultural perspectives, leading to biased evaluations in cross-cultural contexts. While multi-agent approaches such as MACD~\cite{macd} introduce culturally diverse evaluators, they do not fully resolve this issue, as the training data of all those LLMs have similar bias.
 
 In particular, shifting prompts or agents to represent different cultural viewpoints may simply redistribute bias rather than eliminate it. This makes it difficult to design evaluation systems that are universally fair across diverse user populations and application domains.
 
 \subsection{Limitations of Multi-Agent Debate}
 
-Multi-agent debate and collaboration have been proposed as a way to improve evaluation reliability. However, recent findings~\cite{debate_limit} indicate that improvements in such systems may not always stem from genuine reasoning.
+Multi-agent debate and collaboration have been proposed as a way to improve evaluation reliability. However, recent findings~\cite{debate_limit} indicate that improvements in such systems may not always stem from genuine reasoning, rather than majority pressure.
 
 Instead, gains can arise from ensembling effects, where multiple agents increase the probability of selecting a correct answer without truly understanding the problem. Additionally, persuasive but incorrect agents can influence the final outcome, leading to false consensus. These limitations suggest that multi-agent systems are not a guaranteed solution to evaluation errors.
 
 \subsection{Tool-Memory Conflicts in Agentic Evaluation}
 
-The integration of external tools, such as retrieval systems or APIs, introduces new challenges in agent-based evaluation. One critical issue is the conflict between the model's internal knowledge and external tool outputs.
+The integration of external tools, such as retrieval systems, search engines, or APIs, introduces new challenges in agent-based evaluation. One critical issue is the conflict between the model's internal knowledge and external tool outputs.
 
-Prior work~\cite{tool_conflict} demonstrates that such conflicts are common and difficult to resolve. Existing approaches, including prompt-based corrections and retrieval-augmented generation, are often insufficient to reconcile discrepancies. This limits the effectiveness of tool-augmented evaluation systems.
+Prior work~\cite{tool_conflict} shows that even powerful models struggle when a tool's output contradicts their internal "memory," particularly in STEM fields. Existing approaches, including prompt-based corrections and retrieval-augmented generation, are often insufficient to reconcile discrepancies. This limits the effectiveness of tool-augmented evaluation systems.
 
-\subsection{Cost, Latency, and System Complexity}
+\subsection{Cost, Latency, Safety, and Privacy}
 
-Advanced evaluation methods, particularly those based on multi-agent collaboration or agentic pipelines, significantly increase computational cost and system complexity. According to recent surveys~\cite{agent_survey}, these approaches require multiple model calls, iterative reasoning steps, and additional infrastructure for coordination and memory management.
+Advanced evaluation methods, particularly those based on multi-agent collaboration or agentic pipelines, significantly increase computational cost, lstency and can cause privacy and safety issues, according to recent surveys~\cite{agent_survey}. The multi-step reasoning, tool use, and multi-agent coordination increase compute cost and latency. Tool use also raises safety risks such as prompt injection and unintended actions, while memory or personalization can create privacy risks through sensitive data leakage.
 
 This creates practical challenges for real-world deployment, where efficiency, scalability, and response time are critical considerations.
 
