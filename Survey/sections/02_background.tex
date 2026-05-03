@@ -7,12 +7,13 @@
 % 2. Taxonomy Tree Figure: A mandatory diagram showing the three branches of this survey.
 % 3. Navigation: A short paragraph referencing the figure and telling the reader how the rest of the paper is organized.
 
-In a standard Retrieval-Augmented Generation (RAG) pipeline, automated evaluation typically relies on the LLM-as-a-Judge paradigm. The baseline workflow is highly structured. The evaluating model receives a user query, the retrieved reference documents, and the target model's generated response. The model is then asked to score the response across specific dimensions, particularly verifying if the generated text is faithful to the provided context. While baseline LLM judges exhibit general vulnerabilities such as verbosity or self-enhancement biases \citep{wang2023fair}, applying this paradigm to dynamic RAG environments introduces a different set of domain-specific challenges. 
+In a standard Retrieval-Augmented Generation pipeline, automated evaluation typically relies on the LLM-as-a-Judge paradigm. The workflow involves three inputs to the evaluating model: a user query, one or more retrieved reference documents, and the target model's generated response. The judge is then asked to assess the response along multiple dimensions. The two most fundamental dimensions are \textit{faithfulness} and \textit{answer relevance}. Faithfulness measures whether the generated answer is grounded in the retrieved documents, while answer relevance determines if it addresses the user's information need \citep{Brehme_2025, gu2025surveyllmasajudge}. A key distinction between standard LLM evaluation and RAG evaluation lies in the evidence sources. RAG evaluators must reconcile two potentially conflicting streams of information: the retrieved context and their own pre-trained parametric knowledge. General-purpose LLM judges already exhibit documented vulnerabilities like verbosity and self-enhancement biases \citep{wang2023fair}. Applying this paradigm to RAG environments introduces further domain-specific vulnerabilities. Existing surveys have yet to categorize these systematically.
 
-Overall, this survey adopts a unified view to explain how evaluation reliability is challenged under these RAG-specific pressures. One key issue is the ``internal fights'' within the model when its own parametric memory conflicts with the retrieved data. Finally, we demonstrate why the field must move toward ``Agent'' systems to resolve these systemic problems. 
+Specifically, we identify three interrelated challenges that undermine evaluation reliability in RAG systems. First, long contexts and noisy retrieval outputs push positional bias and distractor sensitivity to the surface. Second, when a judge's internal knowledge contradicts the retrieved evidence, it struggles to decide whether to be truthful or faithful. This ambiguity leads to inconsistent scores. Third, prompt engineering and fine-tuning alone cannot resolve these issues. More capable systems need to query external sources and verify claims actively.
 
-To systematically analyze these issues, we categorize the research landscape into a three-branch taxonomy, as illustrated in Figure \ref{fig:taxonomy_tree}.
+Building on these challenges, we organize the surveyed literature into a three-branch taxonomy, illustrated in Figure~\ref{fig:taxonomy_tree}. This taxonomy maps the complete evaluation lifecycle from the environmental conditions that trigger failures to the underlying mechanisms and the corresponding mitigation strategies.
 
+The remainder of this survey follows this structural map:
 % --- Taxonomy Tree Code Start ---
 % 如果是双栏论文，请保留 figure* 和 [t]；如果是单栏，请改为 \begin{figure}[htbp]
 \begin{figure*}[t]
@@ -83,7 +84,7 @@ To systematically analyze these issues, we categorize the research landscape int
             [Auto-Eval Judge (Pipeline): \citep{auto_eval_judge}, fill=green!5, leaf style]
           ]
           [Human-in-the-loop, fill=green!5
-            [Ensemble \& Human Oversight: \citep{comm_systems}, fill=green!5, leaf style]
+            [Ensemble \& Human Oversight: \citep{li2025generationjudgmentopportunitieschallenges}, fill=green!5, leaf style]
           ]
         ]
       ]
@@ -93,10 +94,8 @@ To systematically analyze these issues, we categorize the research landscape int
     \label{fig:taxonomy_tree}
 \end{figure*}
 % --- Taxonomy Tree Code End ---
-We organize our discussion around this structural map to track the complete lifecycle of evaluation:
-
-\begin{itemize}
-    \item \textbf{Section \ref{sec:triggers}} analyzes how noise and extreme context length trigger specific biases in LLM judges within the RAG environment. We evaluate how retrieved irrelevant information, such as distractors, systematically destroys the judge's evaluation capability.
-    \item \textbf{Section \ref{sec:conflict}} provides a deep dive into the model's judging mechanisms when facing discrepancies between internal and external knowledge. We explore the aforementioned ``internal fights'' and define the paradox of knowledge conflict, synthesizing how researchers observe this struggle through internal probing and testing.
-    \item \textbf{Section \ref{sec:mitigation}} collects current mitigation strategies and discusses the evolutionary trend toward ``Agent-as-a-Judge'' frameworks. We analyze the limitations of static interventions and show why the paradigm shift to multi-step, tool-augmented systems is necessary to fix these reliability issues.
+\begin{itemize}    
+\item \textbf{Section~\ref{sec:triggers}} examines how extreme context lengths and retrieved noise act as environmental triggers for evaluator bias. We analyze how irrelevant distractors and positional effects systematically degrade the judge's scoring accuracy, and we survey structural interventions that provide only partial remedies.    
+\item \textbf{Section~\ref{sec:conflict}} provides a mechanistic analysis of the parametric-contextual knowledge conflict within LLM judges. We synthesize findings from representational probing and interpretability research to explain the underlying reasons for evaluator failure rather than merely documenting the outcomes. This section also reviews dynamic control strategies designed to regulate this tension.    
+\item \textbf{Section~\ref{sec:mitigation}} surveys the progression of mitigation strategies from rubric calibration and structured prompting to multi-agent debate and agentic verification pipelines. We analyze the limitations of each approach and argue for the necessity of tool-augmented, stepwise evaluation to address current reliability bottlenecks.
 \end{itemize}
