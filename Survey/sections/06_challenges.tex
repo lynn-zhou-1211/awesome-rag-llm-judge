@@ -2,46 +2,24 @@
 % Length: ~10%
 % Focus: Look forward. Point out the unresolved issues in the newest agentic frameworks.
 
-% Must contain:
-% 1. Benchmarking: The need for more robust testing grounds with adversarial noise.
-% 2. Cost and Latency: The difficulty of deploying slow, expensive agentic judges in real industry systems.
-% 3. Tool Reliability: The cascading failures that happen when an agent uses a flawed external tool.
-While recent advances have significantly improved the reliability of LLM-based evaluation, several fundamental challenges remain unresolved. These limitations highlight that current mitigation strategies are not sufficient to guarantee robust, fair, and generalizable evaluation.
+While recent advances improve LLM-based evaluation, current mitigation strategies cannot yet guarantee robust and fair assessment. To systematize these unresolved issues and propose actionable solutions, we organize the remaining challenges into technical limitations and operational constraints, followed by a progressive research roadmap.
 
-\subsection{Prompt Sensitivity and Superficial Bias}
+\subsection{Technical and Epistemic Challenges}
 
-A major challenge in LLM-based evaluation is the sensitivity of judgments to prompt design. Small variations in prompt wording, structure, or instruction detail can lead to significantly different evaluation outcomes. Prior work~\cite{comm_systems} shows that LLM judges often get influenced by superficial features such as politeness, verbosity, confidence, and writing style rather than true task correctness.
+A critical bottleneck restricting progress is the absence of standardized benchmarks specifically designed to test RAG evaluator reliability. As highlighted by \citet{Brehme_2025}, who catalog existing evaluation methods and datasets, the field lacks dedicated testing grounds incorporating adversarial noise. Consequently, building a universally reliable judge remains difficult; many frameworks overfit to specific tasks and fail to generalize across diverse domains~\cite{agent_judge, auto_eval_judge}.
 
-Even with structured prompting and calibration techniques, this sensitivity cannot be fully eliminated. As a result, evaluation consistency remains a key concern, especially when comparing results across different systems or experimental setups.
+Beyond generalization, evaluators suffer from high prompt sensitivity. \citet{comm_systems} demonstrate that judgments are easily skewed by superficial features like politeness or verbosity, causing inconsistent scoring. Interventions like multi-agent debate attempt to fix this but often provide a false sense of security. Gains in these systems frequently stem from ensembling effects or majority pressure rather than genuine reasoning, allowing persuasive but incorrect agents to force a false consensus~\cite{debate_limit}. Furthermore, agentic evaluation introduces severe tool-memory conflicts. When external tool outputs contradict the model's internal priors, particularly in STEM fields, standard prompt corrections fail to reconcile the discrepancy~\cite{tool_conflict}. 
 
-\subsection{Cultural and Value Misalignment}
+\subsection{Societal and Operational Constraints}
 
-LLM judges are often trained on data that reflects dominant cultural perspectives, leading to biased evaluations in cross-cultural contexts. While multi-agent approaches such as MACD~\cite{macd} introduce culturally diverse evaluators, they do not fully resolve this issue, as the training data of all those LLMs have similar bias.
+LLM judges also suffer from persistent prior biases. Models inherently reflect the distribution of their pre-training data. While frameworks like MACD~\cite{macd} assign diverse personas to different agents, shifting prompts often redistributes bias rather than eliminating it, complicating fair cross-cultural evaluation.
 
-In particular, shifting prompts or agents to represent different cultural viewpoints may simply redistribute bias rather than eliminate it. This makes it difficult to design evaluation systems that are universally fair across diverse user populations and application domains.
+Operationally, solving technical flaws through multi-step agentic pipelines drastically increases computational cost and latency~\cite{agent_survey}. Tool use and memory retention also introduce distinct security vulnerabilities, including prompt injection and sensitive data leakage. These factors severely restrict real-world deployment where response time and privacy are paramount.
 
-\subsection{Limitations of Multi-Agent Debate}
+\subsection{A Roadmap for Future Research}
 
-Multi-agent debate and collaboration have been proposed as a way to improve evaluation reliability. However, recent findings~\cite{debate_limit} indicate that improvements in such systems may not always stem from genuine reasoning, rather than majority pressure.
+Overcoming these limitations demands approaches that are not only technically robust but also viable for large-scale, real-world application. We outline a two-phase roadmap to guide future evaluation frameworks.
 
-Instead, gains can arise from ensembling effects, where multiple agents increase the probability of selecting a correct answer without truly understanding the problem. Additionally, persuasive but incorrect agents can influence the final outcome, leading to false consensus. These limitations suggest that multi-agent systems are not a guaranteed solution to evaluation errors.
+In the short term (1 to 2 years), the community must prioritize creating adversarial benchmarks specifically for RAG evaluators~\cite{Brehme_2025} to measure cascading tool failures accurately. Concurrently, efforts should focus on distilling complex multi-agent reasoning into lightweight, single-pass models to bypass current latency and cost deployment barriers.
 
-\subsection{Tool-Memory Conflicts in Agentic Evaluation}
-
-The integration of external tools, such as retrieval systems, search engines, or APIs, introduces new challenges in agent-based evaluation. One critical issue is the conflict between the model's internal knowledge and external tool outputs.
-
-Prior work~\cite{tool_conflict} shows that even powerful models struggle when a tool's output contradicts their internal "memory," particularly in STEM fields. Existing approaches, including prompt-based corrections and retrieval-augmented generation, are often insufficient to reconcile discrepancies. This limits the effectiveness of tool-augmented evaluation systems.
-
-\subsection{Cost, Latency, Safety, and Privacy}
-
-Advanced evaluation methods, particularly those based on multi-agent collaboration or agentic pipelines, significantly increase computational cost, lstency and can cause privacy and safety issues, according to recent surveys~\cite{agent_survey}. The multi-step reasoning, tool use, and multi-agent coordination increase compute cost and latency. Tool use also raises safety risks such as prompt injection and unintended actions, while memory or personalization can create privacy risks through sensitive data leakage.
-
-This creates practical challenges for real-world deployment, where efficiency, scalability, and response time are critical considerations.
-
-\subsection{Limited Generalization Across Tasks and Domains}
-
-Another key limitation is the lack of generalization across diverse tasks and domains. Many evaluation methods perform well on specific benchmarks but fail to maintain reliability when applied to new settings.
-
-Agent-based evaluation frameworks~\cite{agent_judge, auto_eval_judge} improve performance on complex tasks by decomposing problems into smaller components. However, they still depend heavily on task-specific design choices and evaluation criteria. As a result, building a universally reliable LLM judge remains an open challenge.
-
-Overall, these challenges indicate that while LLM-based evaluation has made substantial progress, it still requires further advancements in robustness, fairness, and scalability before it can be fully trusted in real-world applications.
+In the medium term (3 to 5 years), research should target architectural interventions to resolve internal tool-memory conflicts natively, moving beyond surface-level prompt corrections. Additionally, the field must develop dynamically localized evaluators capable of adjusting to specific cultural frameworks, shifting away from monolithic models that are constrained by a homogeneous set of cultural assumptions.
