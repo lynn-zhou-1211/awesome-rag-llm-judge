@@ -63,6 +63,9 @@ This repository corresponds to our survey paper: *The Illusion of Objectivity in
 - **(FActScore)** *FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation* `arXiv 2023`
   [[Paper]](https://arxiv.org/abs/2305.14251)
 
+- **(ParamMute)** *ParamMute: Suppressing Knowledge-Critical FFNs for Faithful Retrieval-Augmented Generation* `NeurIPS 2025`
+  [[Paper]](https://arxiv.org/abs/2502.15543)
+
 - **(FaithEval)** *FaithEval: Can Your Language Model Stay Faithful to Context, Even If "The Moon is Made of Marshmallows"* `arXiv 2025`
   [[Paper]](https://arxiv.org/abs/2410.03727)
 
@@ -86,6 +89,9 @@ This repository corresponds to our survey paper: *The Illusion of Objectivity in
 
 - **(Micro-Act)** *Micro-Act: Mitigating Knowledge Conflict in LLM-based RAG via Actionable Self-Reasoning* `arXiv 2025`
   [[Paper]](https://arxiv.org/abs/2506.05278)
+
+- **(SPARK)** *SPARK: Adaptive Parametric Knowledge Participation for Faithful Retrieval-Augmented Generation* `arXiv 2026`
+  [[Paper]](https://arxiv.org/abs/2606.27786)
 
 - **(TransparentConflict)** *Seeing through the Conflict: Transparent Knowledge Conflict Handling in Retrieval-Augmented Generation* `arXiv 2026`
   [[Paper]](https://arxiv.org/abs/2601.06842)
